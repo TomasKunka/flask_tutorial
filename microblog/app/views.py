@@ -8,7 +8,8 @@ from config import  POSTS_PER_PAGE
 from .forms import SearchForm
 from config import MAX_SEARCH_RESULTS
 from .emails import follower_notification
-
+from app import babel
+from config import LANGUAGES
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
@@ -176,3 +177,7 @@ def search_results(query):
     return render_template('search_results.html',
                            query=query,
                            results=results)
+
+@babel.localeselector
+def get_locale():
+    return request.accept_languages.best_match(LANGUAGES.keys())
